@@ -8,9 +8,13 @@ export default function Home() {
 
   return (
     <FullPageCard
-      showBackButton={false}
-      subtitle="Select an organization to continue."
       title="Org Switcher"
+      subtitle="Select an organization to continue."
+      // todo: custom sign out button
+      //  <Button asChild size="sm" variant="outline">
+			// 				Sign Out
+			// 			</Button>
+      customBackButton={<></>}
     >
       todo implement org switcher in custom layout
     </FullPageCard>

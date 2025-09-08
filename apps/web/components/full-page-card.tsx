@@ -9,10 +9,10 @@ interface FullPageCardProps {
 	title?: string;
 	subtitle?: string;
 	children?: ReactNode;
-	showBackButton?: boolean;
-	backButtonHref?: string;
-	backButtonText?: string;
-	customBackButton?: ReactNode;
+	showButton?: boolean;
+	buttonHref?: string;
+	buttonText?: string;
+	customButton?: ReactNode;
 	className?: string;
 }
 
@@ -20,10 +20,10 @@ export default function FullPageCard({
 	title,
 	subtitle,
 	children ,
-	showBackButton = false,
-	backButtonHref = "/",
-	backButtonText = "Go Back",
-	customBackButton,
+	showButton = false,
+	buttonHref = "/",
+	buttonText = "Go Back",
+	customButton,
 	className = "w-md",
 }: FullPageCardProps) {
 	return (
@@ -48,12 +48,12 @@ export default function FullPageCard({
 						</>
 					)}
 				</Card>
-				{customBackButton ? (
-					<div className="flex justify-center">{customBackButton}</div>
-				) : showBackButton ? (
+				{customButton ? (
+					<div className="flex justify-center">{customButton}</div>
+				) : showButton ? (
 					<div className="flex justify-center">
 						<Button asChild size="sm" variant="outline">
-							<Link href={backButtonHref}>{backButtonText}</Link>
+							<Link href={buttonHref}>{buttonText}</Link>
 						</Button>
 					</div>
 				) : null}
