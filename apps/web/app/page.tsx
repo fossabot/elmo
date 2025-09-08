@@ -14,7 +14,7 @@ export default function Home() {
       //  <Button asChild size="sm" variant="outline">
 			// 				Sign Out
 			// 			</Button>
-      customBackButton={<></>}
+      customButton={<></>}
     >
       todo implement org switcher in custom layout
     </FullPageCard>
