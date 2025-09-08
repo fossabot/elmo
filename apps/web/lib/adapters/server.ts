@@ -1,11 +1,4 @@
 // Server-only configuration
+// Re-exports the centralized server config
 
-import { getAppConfig as getCloudConfig } from "@elmo/cloud/lib/adapters/index";
-import type { AppConfig } from "@elmo/shared/lib/adapters/types";
-import { getOSSConfig } from "./oss-config";
-
-const isCloudMode = process.env.CLOUD === "true";
-
-export function getAppConfig(): AppConfig {
-  return isCloudMode ? getCloudConfig() : getOSSConfig();
-}
+export { getServerConfig as getAppConfig } from "./config";

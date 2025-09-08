@@ -1,5 +1,7 @@
 "use client";
 
+import { NavOrganization as CloudNavOrganization } from "@elmo/cloud/components/nav-organization";
+import { isCloudMode } from "@/lib/adapters/client-config";
 import { Alert, AlertDescription } from "@elmo/ui/components/alert";
 import { Separator } from "@elmo/ui/components/separator";
 import {
@@ -14,18 +16,19 @@ import { useOrganizations } from "@/hooks/use-organizations";
 import { getAppConfig } from "@/lib/adapters/client";
 
 export function NavOrganization() {
-  const { features } = getAppConfig();
+  console.log("cloud?", isCloudMode());
+  // Use cloud version for cloud mode
+  if (isCloudMode()) {
+    return <CloudNavOrganization />;
+  }
+
+  // OSS version
   const {
     canManageOrganization,
     organizations,
     openOrganizationProfile,
     openCreateOrganization,
   } = useOrganizations();
-
-  // Don't show if organizations are not enabled
-  if (!features.organizations) {
-    return null;
-  }
 
   const handleSettingsClick = () => {
     if (openOrganizationProfile) {
@@ -64,7 +67,7 @@ export function NavOrganization() {
     ) : null;
 
   // Show limited functionality warning for non-admin users
-  if (!canManageOrganization && features.auth) {
+  if (!canManageOrganization) {
     return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
         <SidebarGroupLabel>Organization</SidebarGroupLabel>
@@ -118,7 +121,6 @@ export function NavOrganization() {
                 </div>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {features.billing && (
               <SidebarMenuItem>
                 <SidebarMenuButton onClick={handleBillingClick}>
                   <div className="flex w-full cursor-pointer items-center gap-2">
@@ -127,7 +129,6 @@ export function NavOrganization() {
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )}
           </>
         )}
         {switchOrganizationButton}

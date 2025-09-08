@@ -14,6 +14,7 @@ interface FullPageCardProps {
 	buttonText?: string;
 	customButton?: ReactNode;
 	className?: string;
+	replaceCard?: boolean;
 }
 
 export default function FullPageCard({
@@ -25,6 +26,7 @@ export default function FullPageCard({
 	buttonText = "Go Back",
 	customButton,
 	className = "w-md",
+	replaceCard = false
 }: FullPageCardProps) {
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
@@ -32,7 +34,8 @@ export default function FullPageCard({
 				<div className="flex items-center justify-center space-x-3">
 					<Logo />
 				</div>
-				<Card className="my-8">
+				{replaceCard ? <>{children}</> : (
+					<Card className="my-8">
 					{(title || subtitle) && (
 						<CardHeader className="text-center">
 							{title && <CardTitle className="text-xl">{title}</CardTitle>}
@@ -48,6 +51,7 @@ export default function FullPageCard({
 						</>
 					)}
 				</Card>
+				)}
 				{customButton ? (
 					<div className="flex justify-center">{customButton}</div>
 				) : showButton ? (

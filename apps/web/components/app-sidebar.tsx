@@ -23,6 +23,12 @@ import { NavOrgSwitcher } from "./nav-org-switcher";
 import { NavOrganization } from "./nav-organization";
 import { SubscriptionStatus } from "./subscription-status";
 
+// Conditionally import cloud components
+import { NavAccount as CloudNavAccount } from "@elmo/cloud/components/nav-account";
+import { NavOrgSwitcher as CloudNavOrgSwitcher } from "@elmo/cloud/components/nav-org-switcher";
+import { NavOrganization as CloudNavOrganization } from "@elmo/cloud/components/nav-organization";
+import { isCloudMode } from "@/lib/adapters/client-config";
+
 const getNavData = (orgSlug: string) => ({
   navMain: [
     {
@@ -66,14 +72,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SubscriptionStatus />
         <NavMain items={navData.navMain} />
         <NavLinks />
-        <NavOrganization />
-        <NavAccount />
+        {isCloudMode() ? <CloudNavOrganization /> : <NavOrganization />}
+        {isCloudMode() && <CloudNavAccount />}
       </SidebarContent>
-      {features.organizations && (
-        <SidebarFooter>
-          <NavOrgSwitcher />
-        </SidebarFooter>
-      )}
     </Sidebar>
   );
 }

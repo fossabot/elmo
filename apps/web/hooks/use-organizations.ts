@@ -1,10 +1,12 @@
 "use client";
 
+import { isCloudMode } from "@/lib/adapters/client-config";
 import type { Organization } from "@elmo/shared/lib/adapters/types";
 import { useEffect, useState } from "react";
 import { getAppConfig } from "@/lib/adapters/client";
+import { useOrganizations as useCloudOrganizations } from "@elmo/cloud/hooks/use-organizations";
 
-type UseOrganizationsReturn = {
+export type UseOrganizationsReturn = {
   currentOrganization: Organization | null;
   organizations: Organization[];
   hasOrganizations: boolean;
@@ -16,9 +18,19 @@ type UseOrganizationsReturn = {
   openCreateOrganization?: () => void;
 };
 
+/**
+ * Unified organization hook that works for both cloud and OSS versions
+ * In cloud mode: Uses cloud package hook (which internally uses Clerk)
+ * In OSS mode: Uses adapter-based organization management
+ */
 export function useOrganizations(): UseOrganizationsReturn {
-  const [currentOrganization, setCurrentOrganization] =
-    useState<Organization | null>(null);
+  // For cloud mode, use the cloud package hook that integrates with Clerk
+  if (isCloudMode()) {
+    return useCloudOrganizations();
+  }
+
+  // For OSS mode, use adapter-based approach
+  const [currentOrganization, setCurrentOrganization] = useState<Organization | null>(null);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [hasOrganizations, setHasOrganizations] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);

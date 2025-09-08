@@ -16,8 +16,14 @@ import {
 import { LogOut, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAppConfig } from "@/lib/adapters/client";
+import { isCloudMode } from "@/lib/adapters/client-config";
+import { NavAccount as CloudNavAccount } from "@elmo/cloud/components/nav-account";
 
 export function NavAccount() {
+  if (isCloudMode()) {
+    return <CloudNavAccount />;
+  }
+
   const { features, adapters } = getAppConfig();
   const [user, setUser] = useState<UserType | null>(null);
 

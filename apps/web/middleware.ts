@@ -1,21 +1,17 @@
 import cloudMiddleware from "@elmo/cloud/lib/adapters/middleware";
+import { isCloudMode } from "@/lib/adapters/client-config";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const isCloud = process.env.CLOUD === "true";
-
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|icon|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
+	matcher: ["/","/org/:path*", "/reports/:path*", "/auth/:path*", "/api/:path*"],
 };
 
+
 export default function middleware(req: NextRequest, event: NextFetchEvent) {
-  if (isCloud) {
+  if (isCloudMode()) {
     return cloudMiddleware(req, event);
+  } else {
+    return NextResponse.next();
   }
-  return NextResponse.next();
 }
