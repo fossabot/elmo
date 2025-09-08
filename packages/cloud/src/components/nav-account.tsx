@@ -1,25 +1,26 @@
-"use client";
+'use client';
 
-import { useClerk, useUser } from "@clerk/nextjs";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@elmo/ui/components/avatar";
+import { type LucideIcon, User, LogOut, Repeat, FileText, Shield } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
+import { useClerk } from '@clerk/nextjs';
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@elmo/ui/components/sidebar";
-import { FileText, LogOut, Shield, User } from "lucide-react";
+} from '@elmo/ui/components/sidebar';
+import { Avatar, AvatarImage, AvatarFallback } from '@elmo/ui/components/avatar';
+import Link from 'next/link';
+
+import { Popover, PopoverContent, PopoverTrigger } from '@elmo/ui/components/popover';
+import { OrganizationList } from '@clerk/nextjs';
 
 export function NavAccount() {
   const { user } = useUser();
   const { openUserProfile, signOut } = useClerk();
-
-  const userEmail = user?.emailAddresses?.[0]?.emailAddress || "Loading...";
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress || 'Loading...';
   const userImageUrl = user?.imageUrl;
 
   const handleUserProfileClick = () => {
@@ -36,9 +37,9 @@ export function NavAccount() {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton onClick={handleUserProfileClick}>
-            <div className="flex w-full cursor-pointer items-center gap-2">
+            <div className="flex items-center gap-2 w-full cursor-pointer">
               <Avatar className="size-4">
-                <AvatarImage alt={userEmail} src={userImageUrl} />
+                <AvatarImage src={userImageUrl} alt={userEmail} />
                 <AvatarFallback className="text-xs">
                   <User />
                 </AvatarFallback>
@@ -49,33 +50,23 @@ export function NavAccount() {
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
-            <a
-              className="flex w-full cursor-pointer items-center gap-2"
-              href="https://www.elmohq.com/terms"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Link href="https://www.elmohq.com/terms" className="flex items-center gap-2 w-full cursor-pointer" target="_blank">
               <FileText className="size-4" />
               <span>Terms of Service</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
-            <a
-              className="flex w-full cursor-pointer items-center gap-2"
-              href="https://www.elmohq.com/privacy"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Link href="https://www.elmohq.com/privacy" className="flex items-center gap-2 w-full cursor-pointer" target="_blank">
               <Shield className="size-4" />
               <span>Privacy Policy</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton onClick={handleSignOutClick}>
-            <div className="flex w-full cursor-pointer items-center gap-2">
+            <div className="flex items-center gap-2 w-full cursor-pointer">
               <LogOut className="size-4" />
               <span>Sign Out</span>
             </div>

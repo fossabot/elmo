@@ -11,10 +11,13 @@ import {
   SidebarMenuItem,
 } from "@elmo/ui/components/sidebar";
 import { CircleDollarSign, Repeat, Settings, Users } from "lucide-react";
+import Link from "next/link";
+import { useOrganizations } from "../hooks/use-organizations";
 
 export function NavOrganization() {
   const { openOrganizationProfile } = useClerk();
   const { setActive } = useOrganizationList();
+  const { currentOrganization } = useOrganizations();
 
   const handleSettingsClick = () => {
     openOrganizationProfile();
@@ -26,64 +29,7 @@ export function NavOrganization() {
     });
   };
 
-  const handleBillingClick = () => {
-    openOrganizationProfile({
-      __experimental_startPath: "/organization-billing",
-    });
-  };
-
-  const switchOrganization =
-    setActive === undefined ? null : (
-      <SidebarMenuItem>
-        <SidebarMenuButton onClick={() => setActive({ organization: null })}>
-          <div className="flex w-full cursor-pointer items-center gap-2">
-            <Repeat className="size-4" />
-            <span>Switch</span>
-          </div>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    );
-
-  const switchOrganizationWarning =
-    setActive === undefined ? null : (
-      <>
-        <Separator className="my-2" />
-        <button
-          className="cursor-pointer font-bold"
-          onClick={() => setActive({ organization: null })}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setActive({ organization: null });
-            }
-          }}
-          type="button"
-        >
-          Switch Organization
-        </button>
-      </>
-    );
-
-  const warning = (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Organization</SidebarGroupLabel>
-      <Alert>
-        <AlertDescription className="text-xs">
-          You're on the limited free plan. Contact your organization admin to
-          upgrade for full access.
-          {switchOrganizationWarning}
-        </AlertDescription>
-      </Alert>
-    </SidebarGroup>
-  );
-
   return (
-    <Protect
-      condition={(has) =>
-        has({ role: "org:admin" }) || has({ feature: "paid" })
-      }
-      fallback={warning}
-    >
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
         <SidebarGroupLabel>Organization</SidebarGroupLabel>
         <SidebarMenu>
@@ -104,16 +50,24 @@ export function NavOrganization() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={handleBillingClick}>
-              <div className="flex w-full cursor-pointer items-center gap-2">
+            <SidebarMenuButton asChild>
+              <Link href={`/org/${currentOrganization?.slug || 'default'}/billing`}>
                 <CircleDollarSign className="size-4" />
                 <span>Billing</span>
-              </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          {switchOrganization}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="/">
+                <div className="flex w-full cursor-pointer items-center gap-2">
+                  <Repeat className="size-4" />
+                  <span>Switch</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroup>
-    </Protect>
   );
 }
