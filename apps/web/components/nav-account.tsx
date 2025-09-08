@@ -15,7 +15,7 @@ import {
 } from "@elmo/ui/components/sidebar";
 import { LogOut, User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 export function NavAccount() {
   const { features, adapters } = getAppConfig();

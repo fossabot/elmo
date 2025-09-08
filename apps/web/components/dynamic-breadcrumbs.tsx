@@ -10,6 +10,8 @@ import {
 } from "@elmo/ui/components/breadcrumb";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useOrgParams } from "@/hooks/use-org-params";
+import { useOrganizations } from "@/hooks/use-organizations";
 
 // Helper function to format breadcrumb labels
 function formatBreadcrumbLabel(segment: string): string {
@@ -31,26 +33,50 @@ function formatBreadcrumbLabel(segment: string): string {
 }
 
 // Helper function to build breadcrumb items
-function buildBreadcrumbItems(pathname: string) {
+function buildBreadcrumbItems(
+  pathname: string,
+  orgSlug: string | null,
+  orgName: string | null
+) {
   const segments = pathname.split("/").filter(Boolean);
   const items: Array<{ label: string; href: string; isCurrent: boolean }> = [];
 
-  // Build path segments
-  let currentPath = "";
-  for (let i = 0; i < segments.length; i++) {
-    const segment = segments[i];
-
-    currentPath += `/${segment}`;
-    const isLast = i === segments.length - 1;
-
-    const label = formatBreadcrumbLabel(segment || "");
-    const href = currentPath;
-
+  // Handle /org/[org] route structure
+  if (segments[0] === "org" && segments[1]) {
+    // Add organization breadcrumb
     items.push({
-      label,
-      href,
-      isCurrent: isLast,
+      label: orgName || formatBreadcrumbLabel(segments[1]),
+      href: `/org/${segments[1]}`,
+      isCurrent: segments.length === 2,
     });
+
+    // Add remaining segments (starting from index 2)
+    let currentPath = `/org/${segments[1]}`;
+    for (let i = 2; i < segments.length; i++) {
+      const segment = segments[i];
+      currentPath += `/${segment}`;
+      const isLast = i === segments.length - 1;
+
+      items.push({
+        label: formatBreadcrumbLabel(segment || ""),
+        href: currentPath,
+        isCurrent: isLast,
+      });
+    }
+  } else {
+    // Fallback for other routes
+    let currentPath = "";
+    for (let i = 0; i < segments.length; i++) {
+      const segment = segments[i];
+      currentPath += `/${segment}`;
+      const isLast = i === segments.length - 1;
+
+      items.push({
+        label: formatBreadcrumbLabel(segment || ""),
+        href: currentPath,
+        isCurrent: isLast,
+      });
+    }
   }
 
   return items;
@@ -58,7 +84,14 @@ function buildBreadcrumbItems(pathname: string) {
 
 export function DynamicBreadcrumbs() {
   const pathname = usePathname();
-  const breadcrumbItems = buildBreadcrumbItems(pathname);
+  const { orgSlug } = useOrgParams();
+  const { currentOrganization } = useOrganizations();
+
+  const breadcrumbItems = buildBreadcrumbItems(
+    pathname,
+    orgSlug,
+    currentOrganization?.name || null
+  );
 
   return (
     <Breadcrumb>

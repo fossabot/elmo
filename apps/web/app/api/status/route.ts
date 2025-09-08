@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/server";
 
 export async function GET() {
   const { adapters, features } = getAppConfig();

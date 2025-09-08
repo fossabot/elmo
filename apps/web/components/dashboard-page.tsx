@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@elmo/ui/components/card";
 import Link from "next/link";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 const config = getAppConfig();
 

@@ -28,7 +28,12 @@
     "typescript": "^5.9.2"
   },
   "exports": {
-    "./lib/*": "./src/lib/*.ts",
+    "./lib/adapters/clerk-provider": "./src/lib/adapters/clerk-provider.tsx",
+    "./lib/adapters/clerk-org": "./src/lib/adapters/clerk-org.tsx",
+    "./lib/adapters/clerk-client-auth": "./src/lib/adapters/clerk-client-auth.tsx",
+    "./lib/adapters/index": "./src/lib/adapters/index.ts",
+    "./lib/adapters/middleware": "./src/lib/adapters/middleware.ts",
+    "./lib/*": "./src/lib/*",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts"
   }

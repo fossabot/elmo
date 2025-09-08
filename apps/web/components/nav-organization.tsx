@@ -11,7 +11,7 @@ import {
 } from "@elmo/ui/components/sidebar";
 import { CircleDollarSign, Repeat, Settings, Users } from "lucide-react";
 import { useOrganizations } from "@/hooks/use-organizations";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 export function NavOrganization() {
   const { features } = getAppConfig();

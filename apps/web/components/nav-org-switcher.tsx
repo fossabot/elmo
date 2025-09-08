@@ -10,7 +10,7 @@ import {
 } from "@elmo/ui/components/sidebar";
 import Link from "next/link";
 import { useOrganizations } from "@/hooks/use-organizations";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 export function NavOrgSwitcher() {
   const { currentOrganization } = useOrganizations();
@@ -22,7 +22,7 @@ export function NavOrgSwitcher() {
     : "default";
 
   // Always use org-based link
-  const orgLink = `/${orgSlug}`;
+  const orgLink = `/org/${orgSlug}`;
 
   // todo: should launch org switcher, not link to dashboard
 

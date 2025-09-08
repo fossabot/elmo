@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
 } from "@elmo/ui/components/sidebar";
 import { ExternalLink, FileText, Github } from "lucide-react";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 export function NavLinks() {
   const { navigation } = getAppConfig();

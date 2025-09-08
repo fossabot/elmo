@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Titan_One } from "next/font/google";
 import { AppLayout } from "@/components/app-layout";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/server";
 import "@elmo/ui/globals.css";
 
 const titan = Titan_One({
@@ -28,9 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${titan.variable} antialiased`}>
-        <providers.auth.Provider>
-          <AppLayout>{children}</AppLayout>
-        </providers.auth.Provider>
+        <providers.auth.Provider>{children}</providers.auth.Provider>
       </body>
     </html>
   );

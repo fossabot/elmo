@@ -1,8 +1,10 @@
 import type { AppConfig } from "@elmo/shared/lib/adapters/types";
+import { AuthWrapper } from "./auth-wrapper";
 import { ClerkAuthAdapter } from "./clerk-auth";
-import { ClerkOrgAdapter } from "./clerk-org-adapter";
-import { ClerkAuthProvider } from "./clerk-provider";
+import { ClerkServerOrgAdapter } from "./clerk-server-org";
 
+// Server-safe cloud configuration
+// Uses server-compatible adapters that can be instantiated on the server
 export function getAppConfig(): AppConfig {
   return {
     features: {
@@ -16,10 +18,13 @@ export function getAppConfig(): AppConfig {
     },
     adapters: {
       auth: new ClerkAuthAdapter(),
-      organization: new ClerkOrgAdapter(),
+      organization: new ClerkServerOrgAdapter(),
     },
     providers: {
-      auth: ClerkAuthProvider,
+      auth: {
+        Provider: AuthWrapper,
+        useAuth: () => ({ user: null, isLoaded: false }), // Server-side placeholder
+      },
     },
   };
 }

@@ -9,7 +9,7 @@ import {
 import { AppSidebar } from "@/components/app-sidebar";
 import { DynamicBreadcrumbs } from "@/components/dynamic-breadcrumbs";
 import { useOrganizations } from "@/hooks/use-organizations";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 
 type AppLayoutProps = {
   children: React.ReactNode;

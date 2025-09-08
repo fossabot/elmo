@@ -6,7 +6,7 @@ import { NoOrgAdapter } from "./no-org";
 const authAdapter = new NoAuthAdapter();
 const organizationAdapter = new NoOrgAdapter();
 
-export function getAppConfig(): AppConfig {
+export function getOSSConfig(): AppConfig {
   return {
     features: {
       auth: false,

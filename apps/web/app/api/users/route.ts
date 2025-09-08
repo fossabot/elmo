@@ -1,5 +1,5 @@
 import { constants } from "node:http2";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/server";
 
 export async function GET() {
   const { adapters } = getAppConfig();

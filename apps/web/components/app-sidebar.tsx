@@ -15,7 +15,7 @@ import Link from "next/link";
 import type * as React from "react";
 import { NavMain } from "@/components/nav-main";
 import { useOrganizations } from "@/hooks/use-organizations";
-import { getAppConfig } from "@/lib/adapters";
+import { getAppConfig } from "@/lib/adapters/client";
 import { Logo } from "./logo";
 import { NavAccount } from "./nav-account";
 import { NavLinks } from "./nav-links";
@@ -27,17 +27,17 @@ const getNavData = (orgSlug: string) => ({
   navMain: [
     {
       title: "Overview",
-      url: `/${orgSlug}`,
+      url: `/org/${orgSlug}`,
       icon: IconDashboard,
     },
     {
       title: "Prompts",
-      url: `/${orgSlug}/prompts`,
+      url: `/org/${orgSlug}/prompts`,
       icon: IconListDetails,
     },
     {
       title: "Settings",
-      url: `/${orgSlug}/settings`,
+      url: `/org/${orgSlug}/settings`,
       icon: IconSettings,
     },
   ],
@@ -53,7 +53,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     : "default";
 
   const navData = getNavData(orgSlug);
-  const homeUrl = `/${orgSlug}`;
+  const homeUrl = `/org/${orgSlug}`;
 
   return (
     <Sidebar variant="inset" {...props}>
