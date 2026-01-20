@@ -1,4 +1,6 @@
 # Elmo
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Felmohq%2Felmo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Felmohq%2Felmo?ref=badge_shield)
+
 
 **Optimize your brand's perception in LLMs and _drive sales_.**
 
@@ -30,6 +32,9 @@ We will be updating this README with detailed instructions (as well as a Docker 
 | Admin Features                    | ❌     | ✅  |
 | Paid Subscriptions                | ❌     | ✅  |
 | White Label                       | ❌     | ✅  |
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Felmohq%2Felmo.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Felmohq%2Felmo?ref=badge_large)
 
 ## Repo Activity
 
